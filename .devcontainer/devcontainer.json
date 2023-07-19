@@ -1,0 +1,19 @@
+{
+	"name": "mmm",
+	"build": {
+		"dockerfile": "../Dockerfile"
+	},
+	"customizations": {
+        "vscode": {
+            "settings": {
+		        "terminal.integrated.shell.linux": "/bin/bash"
+            },
+            "extensions": [
+                "eamodio.gitlens",
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "ms-toolsai.vscode-jupyter-powertoys"
+            ]
+        }
+    }
+}
