@@ -1,9 +1,6 @@
 name: Secrets Check
 
-on: [
-  push,
-  pull_request
-]
+on: [push]
 
 jobs:
   trivy-secrets-check:
@@ -25,10 +22,9 @@ jobs:
 
       - name: Trivy Secrets Check
         run: |
-          trivy --exit-code 1 --severity HIGH,CRITICAL fs --scanners secret ./example/password.txt
-          # export files=$(find ./ -type d -not -path '*.git*')
-          # export check="secret"
-          # ./.github/workflows/trivy_check.sh
+          export files=$(find ./ -type d -not -path '*.git*')
+          export check="secret"
+          ./.github/workflows/trivy_check.sh
 
       - name: Slack Notification
         if: ${{ failure() }}
