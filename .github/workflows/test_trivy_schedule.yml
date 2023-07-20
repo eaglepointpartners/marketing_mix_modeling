@@ -1,6 +1,9 @@
 name: Secrets Check
 
-on: [push]
+on: [
+  push,
+  pull_request
+]
 
 jobs:
   trivy-secrets-check:

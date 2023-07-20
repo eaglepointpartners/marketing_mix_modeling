@@ -1,5 +1,7 @@
 #!/bin/bash
 
+> response.txt
+
 for f in $(echo $files)
     do
         if [[ -f "$f" ]]; then
