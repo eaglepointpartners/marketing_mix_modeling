@@ -1,0 +1,36 @@
+name: Secrets Check
+
+on: [push]
+
+jobs:
+  trivy-secrets-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3      
+
+      - name: Install Trivy
+        run: |
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key \
+          | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] \
+          https://aquasecurity.github.io/trivy-repo/deb \
+          $(lsb_release -sc) main" \
+          | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update -y && sudo apt-get install trivy -y
+          trivy -v
+
+      - name: Trivy Secrets Check
+        run: |
+          export files=$(find ./ -type d -not -path '*.git*')
+          export check="secret"
+          ./.github/workflows/trivy_check.sh
+
+      - name: Slack Notification
+        if: ${{ failure() }}
+        uses: lazy-actions/slatify@v3.0.0
+        with:
+          type: ${{ job.status }}
+          url: ${{ secrets.SLACK_INFRA_WEBHOOK }}
+          job_name: '*Secrets vulnerabilities on repo marketing_mix_modeling*'
+          channel: '#team-infra'
