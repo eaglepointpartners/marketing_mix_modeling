@@ -12,6 +12,7 @@ in a Visual Studio (VS) Code devcontainer.
 - Conda environment with PyMC 5+
 - Jupyter Notebook integration
 - Access to local data sets
+- DuckDB for working with Parquet
 
 #### Prerequisites:
 - [VS Code](https://code.visualstudio.com/download)
@@ -32,4 +33,4 @@ in a Visual Studio (VS) Code devcontainer.
 
 ## Incorportating Data
 
-Please keep this repo free of data, credentials and other secretes (one exception being data accompanying example notebook). Instead, the dev container is setup to use an environment variable `MMM_DATA_PATH` to access datasets outside this repo. When the dev container gets built, the contents of your local folder will get mounted to `/root/data` within container.
+Please keep this repo free of data, credentials and other secretes (one exception being data accompanying example notebook). Instead, the dev container is setup to use an environment variable `MMM_DATA_PATH` to access datasets outside this repo. When the dev container gets built, the contents of your local folder will get mounted to `/root/data` within container. Try it out with `example/using_data.ipynb`.
