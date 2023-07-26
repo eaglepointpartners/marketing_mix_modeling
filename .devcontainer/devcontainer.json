@@ -3,6 +3,10 @@
 	"build": {
 		"dockerfile": "../Dockerfile"
 	},
+    "mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached",
+		"source=${localEnv:MMM_DATA_PATH},target=/root/data,type=bind,consistency=cached"
+	],
 	"customizations": {
         "vscode": {
             "settings": {
