@@ -7,9 +7,10 @@ RUN apt-get update && apt-get install -y openssh-client
 RUN conda create -y -n mmm python=3.11
 RUN conda install -n mmm -y \
     "pymc>=5,<6" \
-    "pymc-marketing<0.2" \
+    "pymc-marketing>=0.2,<0.3" \
     python-duckdb \
     pandas \
+    pyyaml \
     matplotlib \
     seaborn \
     python-graphviz \
