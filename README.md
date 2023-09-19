@@ -34,3 +34,13 @@ in a Visual Studio (VS) Code devcontainer.
 ## Incorportating Data
 
 Please keep this repo free of data, credentials and other secrets (one exception being data accompanying example notebook). Instead, the dev container is setup to use an environment variable `MMM_DATA_PATH` to access datasets outside this repo. When the dev container gets built, the contents of your local folder will get mounted to `/root/data` within the container. Try it out with `example/using_data.ipynb`.
+
+## Updating Dependencies
+To avoid dependency drift, we version control `environment.yml`. This also avoids us have to re-solve the environment each time we rebuild the dev container, which can take a lot of time.
+
+Here's the recommended way to update dependencies:
+1. `cp environment.yml environment-dev.yml` (the latter is not version controlled)
+2. `mamba env update --file environment-dev.yml --prune` (using mamba to solve the environment is *much* faster)
+3. test the code
+4. `mamba env export --name mmm --file environment.yml`
+5. open a PR 
