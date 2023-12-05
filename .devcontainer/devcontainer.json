@@ -13,11 +13,11 @@
 		        "terminal.integrated.shell.linux": "/bin/bash"
             },
             "extensions": [
-                "eamodio.gitlens",
-                "ms-python.python",
-                "ms-toolsai.jupyter",
-                "ms-toolsai.vscode-jupyter-powertoys"
-            ]
+				"eamodio.gitlens",
+				"ms-python.python",
+				"ms-toolsai.jupyter",
+				"ms-python.vscode-pylance"
+			]
         }
     }
 }

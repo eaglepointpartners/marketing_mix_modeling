@@ -5,7 +5,7 @@ import math
 
 from typing import Optional
 
-BENCHMARK_DATA_PATH = '/root/data/daily_benchmark_metrics.parquet'
+BENCHMARK_DATA_PATH = '/root/data/daily_benchmark_metrics_*.parquet'
 
 def data_fold_in_sample(
         data: pd.DataFrame,
@@ -78,12 +78,10 @@ def build_regression_data_from_benchmark_org(org_id: str, grain: str = 'daily') 
             new_orders_product_gross_discount as new_orders_discount,
             marketing_spend,
             marketing_impressions
-        from '{BENCHMARK_DATA_PATH}'
+        from read_parquet('{BENCHMARK_DATA_PATH}')
         where benchmark_organisation_id = '{org_id}'
         """
     )
-
-    group_by_date = 'week_date' if grain == 'weekly' else 'day_date'
 
     # assemble organisation attributes
     attributes = db.sql(
@@ -128,6 +126,8 @@ def build_regression_data_from_benchmark_org(org_id: str, grain: str = 'daily') 
             on a.benchmark_organisation_id = b.benchmark_organisation_id
         """
     )
+
+    group_by_date = 'week_date' if grain == 'weekly' else 'day_date'
 
     # demand variables
     demand = db.sql(
@@ -206,6 +206,7 @@ def build_regression_data_from_benchmark_org(org_id: str, grain: str = 'daily') 
                     when (channel_grouping ilike 'direct') then 'direct'
                     when (channel_grouping ilike 'organic search') then 'organic_search'
                     when (channel_grouping ilike 'affiliates') then 'affiliate'
+                    when (channel_grouping ilike 'referral') then 'referral'
                     else 'other'
                 end as referring_channel,
                 sessions,
@@ -217,7 +218,9 @@ def build_regression_data_from_benchmark_org(org_id: str, grain: str = 'daily') 
                 'branded_search',
                 'organic_search',
                 'affiliate',
-                'direct'
+                'referral',
+                'direct',
+                'other'
             )
         using
             sum(sessions) as clicks,

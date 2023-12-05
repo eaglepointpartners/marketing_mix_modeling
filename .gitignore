@@ -1,6 +1,7 @@
 **/local-dev/**
 **/notebooks/**
 **/__pycache__/**
+environment-dev.yml
 .ipynb_checkpoints/
 .python-version
 .vscode
